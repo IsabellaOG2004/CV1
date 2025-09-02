@@ -15,6 +15,10 @@ class CVData(BaseModel):
     formacion: str
     idiomas: str
 
+@app.get("/health")
+def health():
+    return {"status": "ok", "service": "running"}
+
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 
 @app.post("/chat")
