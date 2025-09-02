@@ -15,6 +15,27 @@ class CVData(BaseModel):
     formacion: str
     idiomas: str
 
+OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
+
+@app.post("/chat")
+async def chat(request: Request):
+    body = await request.json()
+    prompt = body.get("prompt", "")
+
+    r = requests.post(
+        "https://api.openai.com/v1/chat/completions",
+        headers={
+            "Authorization": f"Bearer {OPENAI_API_KEY}",
+            "Content-Type": "application/json",
+        },
+        json={
+            "model": "gpt-4o-mini",   # aquí pones el modelo que quieras
+            "messages": [{"role": "user", "content": prompt}],
+            "temperature": 0.7
+        }
+    )
+    return r.json()
+    
 @app.post("/generar_cv")
 def generar_cv(data: CVData):
     doc = Document("fromato1.docx")
