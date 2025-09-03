@@ -4,6 +4,7 @@ from docx import Document
 from docx.enum.text import WD_ALIGN_PARAGRAPH
 from docx.shared import Pt
 import os
+import requests 
 
 app = FastAPI()
 
